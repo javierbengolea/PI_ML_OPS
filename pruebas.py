@@ -23,7 +23,7 @@ def get_recommended(id_juego):
     return pd.DataFrame(lista, columns=['id_juego', 'similitud']).sort_values('similitud', ascending=False).head(5)
     
 
-id_juego = 314010
+id_juego = 323900
 
 recomendados = get_recommended(id_juego)
 

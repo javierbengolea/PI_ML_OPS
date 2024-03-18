@@ -26,6 +26,7 @@ async def saludo(nombre: str):
 
 @app.get("/recommend/{id_juego}")
 async def recommend(id_juego: int):
+    
     def comparar(id_1, id_2):
         row1 = matriz_dummies.loc[id_1].values.reshape(1, -1)
         row2 = matriz_dummies.loc[id_2].values.reshape(1, -1)
@@ -36,6 +37,9 @@ async def recommend(id_juego: int):
 
     lista = []
     # id_juego = matriz_dummies.sample().index
+
+    if id_juego not in matriz_dummies:
+        return {'message' : 'game_id not found!!!'}
 
     for i in matriz_dummies.index.tolist():
         if i != id_juego:

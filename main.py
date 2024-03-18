@@ -32,13 +32,14 @@ async def recommend(id_juego: int):
         row2 = matriz_dummies.loc[id_2].values.reshape(1, -1)
         return cosine_similarity(row1, row2)    
 
-
     matriz_dummies = pd.read_csv('matriz_dummies.csv', index_col='id_juego')
+    
+    print(matriz_dummies.loc[id_juego])
 
     lista = []
     # id_juego = matriz_dummies.sample().index
 
-    if id_juego not in matriz_dummies:
+    if id_juego not in matriz_dummies.index:
         return {'message' : 'game_id not found!!!'}
 
     for i in matriz_dummies.index.tolist():

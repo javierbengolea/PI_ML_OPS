@@ -75,7 +75,7 @@ async def UserForGenre( genero : str ):
     disponibles = usuario_genero.genres.unique()
     if genero not in disponibles:
         return {"Error": f"Genero '{genero}' no encontrado"}
-    usuario = usuario_genero.query(f'genres == "Strategy"').head(1).user_id.values[0]
+    usuario = usuario_genero.query(f'genres == "{genero}"').head(1).user_id.values[0]
     usuarios_genero_horas = pd.read_csv('merged_2.csv')
     # print(usuarios_genero_horas.query(f"user_id =='{usuario}' and genres == '{genero}'"))
     query = usuarios_genero_horas.query(f"user_id =='{usuario}' and genres == '{genero}'")

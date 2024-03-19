@@ -42,3 +42,26 @@ id_juego = 323900
 df_revs_filtrada = pd.read_csv('df_revs_filtrada.csv')
 
 print(df_revs_filtrada.info())
+
+import pandas as pd
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+
+def comparar(row1, row2):
+    return cosine_similarity(row1, row2)
+
+matriz_dummies = pd.read_csv('matriz_dummies_filtrada.csv', index_col='id_game')
+
+def find_similar_games(id_juego, matriz_dummies):
+    if id_juego not in matriz_dummies.index:
+        return {'Error': f'{id_juego} No Encontrado'}
+
+    row1 = matriz_dummies.loc[id_juego].values.reshape(1, -1)
+    similarities = cosine_similarity(matriz_dummies.values, row1)
+    similar_games = [(game_id, sim) for game_id, sim in zip(matriz_dummies.index, similarities) if 0.5 < sim[0] <= 1 and game_id != id_juego]
+    juegos_rec = pd.DataFrame(similar_games, columns=['id_game', 'similitud']).sort_values('similitud', ascending=False).head(5)
+    return juegos_rec
+
+id_juego =  4000# Your game ID here
+result = find_similar_games(id_juego, matriz_dummies)
+print(result)

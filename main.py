@@ -15,7 +15,12 @@ async def root():
 
 @app.get("/recommend/{id_juego}")
 async def recommend(id_juego: int):
-    
+    """
+    Retorna una recomendación de 5 juegos en base al parámetro id_juego.
+
+    Args:
+        id_juego (int): _description_
+    """
     def comparar(id_1, id_2):
         row1 = matriz_dummies.loc[id_1].values.reshape(1, -1)
         row2 = matriz_dummies.loc[id_2].values.reshape(1, -1)
@@ -31,16 +36,30 @@ async def recommend(id_juego: int):
     if id_juego not in matriz_dummies.index:
         return {'message' : 'id_game not found!!!'}
 
-    for i in matriz_dummies.index.tolist():
-        if i != id_juego:
-            (a, b) = i, comparar(id_juego, i)
-            if 0.5 < b[0][0] <= 1:
-                lista.append((a, b[0][0]))
+    # for i in matriz_dummies.index.tolist():
+    #     if i != id_juego:
+    #         (a, b) = i, comparar(id_juego, i)
+    #         if 0.5 < b[0][0] <= 1:
+    #             lista.append((a, b[0][0]))
     
-    juegos_rec = pd.DataFrame(lista, columns=['id_game', 'similitud']).sort_values('similitud', ascending=False).head(5)
+    # juegos_rec = pd.DataFrame(lista, columns=['id_game', 'similitud']).sort_values('similitud', ascending=False).head(5)
+    row1 = matriz_dummies.loc[id_juego].values.reshape(1, -1)
+    
+    similarities = cosine_similarity(matriz_dummies.values, row1)
+    similar_games = [(game_id, sim) for game_id, sim in zip(matriz_dummies.index, similarities) if 0.5 < sim[0] <= 1 and game_id != id_juego]
+    juegos_rec = pd.DataFrame(similar_games, columns=['id_game', 'similitud']).sort_values('similitud', ascending=False).head(5)
 
+    df_names = pd.read_csv('datasets/df_games_names.csv')
+    nombres = []
+    ids = juegos_rec['id_game'].tolist()
+    
+    for idx, i in enumerate(juegos_rec['id_game']):
+        nombres.append(str(ids[idx]) + ": " +df_names.query(f"id_game == {i}").app_name.values[0])
+    print(nombres)
+    
+    salida = [{ids[i] : df_names.query(f"id_game == {x}").app_name.values[0]} for i, x in enumerate(ids)]
 
-    return {"juegos": juegos_rec['id_game'].tolist()}
+    return {"juegos": salida}
 
 @app.get("/PlayTimeGenre/{genero}")
 async def PlayTimeGenre(genero: str):

@@ -26,7 +26,7 @@ async def PlayTimeGenre(genero: str):
         genero (string): _Genero de Juego_.        
         Ejemplo: 'Action'
     '''
-    genero_estadisticas = pd.read_csv('generos_estadisticas.csv')
+    genero_estadisticas = pd.read_csv('datasets/generos_estadisticas.csv')
     disponibles = genero_estadisticas.genres_x.unique()
     if genero not in disponibles:
         return {"Error": "Género no encontrado"}
@@ -46,17 +46,17 @@ async def UserForGenre( genero : str ):
         Ejemplo: 'Indie'
     '''
     
-    usuario_genero = pd.read_csv('usuario_genero.csv').reset_index()
+    usuario_genero = pd.read_csv('datasets/usuario_genero.csv').reset_index()
     disponibles = usuario_genero.genres.unique()
     if genero not in disponibles:
         return {"Error": f"Genero '{genero}' no encontrado"}
     usuario = usuario_genero.query(f'genres == "{genero}"').head(1).user_id.values[0]
-    usuarios_genero_horas = pd.read_csv('merged_2.csv')
+    usuarios_genero_horas = pd.read_csv('datasets/merged_2.csv')
     # print(usuarios_genero_horas.query(f"user_id =='{usuario}' and genres == '{genero}'"))
     query = usuarios_genero_horas.query(f"user_id =='{usuario}' and genres == '{genero}'")
     query = query.reset_index()
     salida = [{f'Año {row[3]}': str(round(row[4]/60))} for i, row in enumerate(query.values)]
-    print(salida)
+    # print(salida)
     return {f"Usuario con más horas jugadas para el género '{genero}': ": str(usuario),
             'Horas Jugadas: ': salida}
 
@@ -69,7 +69,7 @@ async def UserRecommend(anio: int):
         anio (int): _Año de Recomendación y/o Review_.        
         Example: '2015'
     '''
-    df_revs_filtrada = pd.read_csv('df_revs_filtrada.csv')
+    df_revs_filtrada = pd.read_csv('datasets/df_revs_filtrada.csv')
     disponibles = df_revs_filtrada.year_posted.unique()
     if anio not in disponibles:
         return {"Error": "Año no encontrado"}
@@ -94,7 +94,7 @@ async def UsersWorstDeveloper( anio : int ):
         anio (int): _Año de Recomendación y/o Review_.        
         Example: 2015
     '''
-    dev_rec = pd.read_csv('developer_year_rec.csv')
+    dev_rec = pd.read_csv('datasets/developer_year_rec.csv')
     disponibles = dev_rec.year_posted.unique()
     if anio not in disponibles:
         return {"Error": f"Año '{anio}' no encontrado"}
@@ -144,7 +144,7 @@ async def recommend(id_juego: int):
         row2 = matriz_dummies.loc[id_2].values.reshape(1, -1)
         return cosine_similarity(row1, row2)    
 
-    matriz_dummies = pd.read_csv('matriz_dummies_filtrada.csv', index_col='id_game')
+    matriz_dummies = pd.read_csv('datasets/matriz_dummies_filtrada.csv', index_col='id_game')
 
 
     if id_juego not in matriz_dummies.index:

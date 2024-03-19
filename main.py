@@ -70,7 +70,7 @@ async def UsersRecommend(anio: int):
     disponibles = df_revs_filtrada.year_posted.unique()
     if anio not in disponibles:
         return {"Error": "Año no encontrado"}
-    top3 = df_revs_filtrada.query("year_posted == 2016").groupby(['item_id', 'year_posted']).sum(['reviews_sent', 'recommend']).sort_values(by='recommend', ascending=False).head(3)
+    top3 = df_revs_filtrada.query(f"year_posted == {anio}").groupby(['item_id', 'year_posted']).sum(['reviews_sent', 'recommend']).sort_values(by='recommend', ascending=False).head(3)
     top3.reset_index(inplace=True)
     
     salida = [{f'Puesto {i+1}': str(row[0])} for i, row in enumerate(top3.values)]

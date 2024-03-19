@@ -32,9 +32,13 @@ id_juego = 323900
 # print(matriz_dummies.index)
 # print(recomendados.to_json())
 
-genero_estadisticas = pd.read_csv('generos_estadisticas.csv')
-genero_estadisticas = genero_estadisticas.set_index(['genres_x', 'release_year'])
-anio_maximo = genero_estadisticas.query(f"genres_x == 'Action'")['playtime_forever'].sort_values(ascending=False).head(1)
-anio = pd.DataFrame(anio_maximo).reset_index().release_year.values[0]
+# genero_estadisticas = pd.read_csv('generos_estadisticas.csv')
+# genero_estadisticas = genero_estadisticas.set_index(['genres_x', 'release_year'])
+# anio_maximo = genero_estadisticas.query(f"genres_x == 'Action'")['playtime_forever'].sort_values(ascending=False).head(1)
+# anio = pd.DataFrame(anio_maximo).reset_index().release_year.values[0]
 
-print(anio)
+# print(anio)
+
+df_revs_filtrada = pd.read_csv('df_revs_filtrada.csv')
+
+print(df_revs_filtrada.info())

@@ -10,8 +10,8 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"juegos": df_example['col1'].tolist()}
-    # return {"message": "Hello World"}
+    # return {"juegos": df_example['col1'].tolist()}
+    return {"message": "Hello World"}
 
 @app.get("/recommend/{id_juego}")
 async def recommend(id_juego: int):
@@ -21,7 +21,7 @@ async def recommend(id_juego: int):
         row2 = matriz_dummies.loc[id_2].values.reshape(1, -1)
         return cosine_similarity(row1, row2)    
 
-    matriz_dummies = pd.read_csv('matriz_dummies.csv', index_col='id_game')
+    matriz_dummies = pd.read_csv('matriz_dummies_filtrada.csv', index_col='id_game')
     
     # print(matriz_dummies.loc[id_juego])
 
@@ -53,8 +53,8 @@ async def PlayTimeGenre(genero: str):
     anio: str = pd.DataFrame(anio_maximo).reset_index().release_year.values[0]
     return {'Año Lanzamiento: ': str(anio)}
 
-@app.get("/UsersRecommend/{anio}")
-async def UsersRecommend(anio: int):
+@app.get("/UserRecommend/{anio}")
+async def UserRecommend(anio: int):
     df_revs_filtrada = pd.read_csv('df_revs_filtrada.csv')
     disponibles = df_revs_filtrada.year_posted.unique()
     if anio not in disponibles:
@@ -84,3 +84,12 @@ async def UserForGenre( genero : str ):
     print(salida)
     return {f"Usuario con más horas jugadas para el género '{genero}': ": str(usuario),
             'Horas Jugadas: ': salida}
+
+@app.get("/UsersWorstDeveloper/{anio}")
+def UsersWorstDeveloper( anio : int ): 
+    dev_rec = pd.read_csv('developer_year_rec.csv')
+
+    query = dev_rec.query("year_posted == 2015").head(3)
+
+    salida = [{f'Puesto {i+1}': str(row[0])} for i, row in enumerate(query.values)]
+    return salida

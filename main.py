@@ -6,23 +6,12 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-df_example = pd.DataFrame([[1,2],[3,4]], columns=['col1', 'col2'])
 
 
 @app.get("/")
 async def root():
     return {"juegos": df_example['col1'].tolist()}
     # return {"message": "Hello World"}
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
-    
-@app.get("/{nombre}")
-async def saludo(nombre: str):
-    saludo_st: str = f"Hello {nombre}!!!"
-    
-    return {"message": saludo_st}
 
 @app.get("/recommend/{id_juego}")
 async def recommend(id_juego: int):
@@ -85,11 +74,13 @@ async def UserForGenre( genero : str ):
     usuario_genero = pd.read_csv('usuario_genero.csv').reset_index()
     disponibles = usuario_genero.genres.unique()
     if genero not in disponibles:
-        return {"Error": "Genero no encontrado"}
+        return {"Error": f"Genero '{genero}' no encontrado"}
     usuario = usuario_genero.query(f'genres == "Strategy"').head(1).user_id.values[0]
     usuarios_genero_horas = pd.read_csv('merged_2.csv')
-    print(usuarios_genero_horas.query(f"user_id =='{usuario}' and genres == '{genero}'"))
+    # print(usuarios_genero_horas.query(f"user_id =='{usuario}' and genres == '{genero}'"))
     query = usuarios_genero_horas.query(f"user_id =='{usuario}' and genres == '{genero}'")
     query = query.reset_index()
-    salida = [{f'Año {row[3]}': str(row[4]/60)} for i, row in enumerate(query.values)]
-    return {f'Usuario con más horas jugadas para el género {genero}: ': str(usuario)}
+    salida = [{f'Año {row[3]}': str(round(row[4]/60))} for i, row in enumerate(query.values)]
+    print(salida)
+    return {f"Usuario con más horas jugadas para el género '{genero}': ": str(usuario),
+            'Horas Jugadas: ': salida}

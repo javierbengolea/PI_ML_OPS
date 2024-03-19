@@ -25,9 +25,16 @@ def get_recommended(id_juego):
 
 id_juego = 323900
 
-recomendados = get_recommended(id_juego)
+# recomendados = get_recommended(id_juego)
 
 # for i in recomendados.index:
     # print(recomendados.loc[i])
 # print(matriz_dummies.index)
-print(recomendados.to_json())
+# print(recomendados.to_json())
+
+genero_estadisticas = pd.read_csv('generos_estadisticas.csv')
+genero_estadisticas = genero_estadisticas.set_index(['genres_x', 'release_year'])
+anio_maximo = genero_estadisticas.query(f"genres_x == 'Action'")['playtime_forever'].sort_values(ascending=False).head(1)
+anio = pd.DataFrame(anio_maximo).reset_index().release_year.values[0]
+
+print(anio)

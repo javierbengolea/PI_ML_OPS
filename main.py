@@ -102,7 +102,7 @@ async def UserForGenre( genero : str ):
             'Horas Jugadas: ': salida}
 
 @app.get("/UsersWorstDeveloper/{anio}")
-def UsersWorstDeveloper( anio : int ): 
+async def UsersWorstDeveloper( anio : int ): 
     '''
     Retorna las compañías desarrolladoras con menos recomendaciones y más comentarios negativos por
     '''
@@ -117,3 +117,22 @@ def UsersWorstDeveloper( anio : int ):
 
     salida = [{f'Puesto {i+1}': str(row[0])} for i, row in enumerate(query.values)]
     return salida
+
+@app.get("/SentimentAnalysis/{developer}")
+async def sentiment_analysis(developer : str ):
+    '''
+    
+    '''
+    df_rev_sent = pd.read_csv('datasets/des_reviews_sent.csv')
+    # developer = 'Valve'
+    
+    if developer not in df_rev_sent.developer.unique():
+        return {"Error": f"Developer '{developer}' no encontrado"}
+    
+    print(df_rev_sent.query(f"developer == '{developer}' and review_sent == 0").count().review_sent)
+    negativas = df_rev_sent.query(f"developer == '{developer}' and review_sent == 0").count().review_sent
+    neutrales = df_rev_sent.query(f"developer == '{developer}'  and review_sent == 1").count().review_sent
+    positivas = df_rev_sent.query(f"developer == '{developer}'  and review_sent == 2").count().review_sent
+    salida = {'Negativas': str(negativas), 'Neutrales': str(neutrales), 'Positivas': str(positivas)}
+    
+    return {"developer": developer, 'reviews':salida}

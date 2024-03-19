@@ -87,9 +87,17 @@ async def UserForGenre( genero : str ):
 
 @app.get("/UsersWorstDeveloper/{anio}")
 def UsersWorstDeveloper( anio : int ): 
+    '''
+    Retorna las compañías desarrolladoras con menos recomendaciones y más comentarios negativos por
+    '''
     dev_rec = pd.read_csv('developer_year_rec.csv')
+    disponibles = dev_rec.year_posted.unique()
+    if anio not in disponibles:
+        return {"Error": f"Año '{anio}' no encontrado"}
 
-    query = dev_rec.query("year_posted == 2015").head(3)
+    query = dev_rec.query(f"year_posted == {anio}").head(3)
+
+    print(anio)
 
     salida = [{f'Puesto {i+1}': str(row[0])} for i, row in enumerate(query.values)]
     return salida

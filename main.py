@@ -52,14 +52,11 @@ async def recommend(id_juego: int):
     df_names = pd.read_csv('datasets/df_games_names.csv')
     nombres = []
     ids = juegos_rec['id_game'].tolist()
-    
-    for idx, i in enumerate(juegos_rec['id_game']):
-        nombres.append(str(ids[idx]) + ": " +df_names.query(f"id_game == {i}").app_name.values[0])
-    print(nombres)
+
     
     salida = [{ids[i] : df_names.query(f"id_game == {x}").app_name.values[0]} for i, x in enumerate(ids)]
 
-    return {"juegos": salida}
+    return {"juego: ":  {id_juego : df_names.query(f"id_game == {id_juego}").app_name.values[0]}, "recomendados": salida}
 
 @app.get("/PlayTimeGenre/{genero}")
 async def PlayTimeGenre(genero: str):

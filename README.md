@@ -34,9 +34,15 @@ El producto mínimo viable consiste en una API con 6 Endpoints:
 * GET /SentimentAnalysis/{developer}: Análisis de Sentimiento para una desarrolladora dada, se toman las reseñas y se categorizan y contabilizan en negativas, neutrales y positivas.
 * GET /recommend/{id_juego}: Dado un juego como parámetro se aplica un algoritmo que devuelve 5 juegos similares.
 
-Implementadas y documentadas en [Link Render](https://pi-ml-ops-b4cf.onrender.com/docs).
+Estas funcionalidades están implementadas y documentadas en [Link Render](https://pi-ml-ops-b4cf.onrender.com/docs).
 
-Para el Sistema de Recomendación, se utiliza un algoritmo que implica la 
+## Implementación de Machine Learning
+
+Para el Sistema de Recomendación, se utiliza un algoritmo que implica la `Similitud del Coseno`, métrica que trabaja sobre vectores y da una aproximación de la similitud entre ellos. Por lo tanto, si caracterizamos cada juego y lo comparamos con los demás podremos tener una medida muy acertada sobre su similaridad o no, lo que nos permite hacer muy buenas sugerencias.
+
+
+
+
 
 
 

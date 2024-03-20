@@ -18,6 +18,7 @@ async def root():
 
 
 @app.get("/PlayTimeGenre/{genero}")
+#uvicor
 async def PlayTimeGenre(genero: str):
     '''
     Devuelve el año con más horas jugadas para el genero provisto.
@@ -78,9 +79,6 @@ async def UserRecommend(anio: int):
     
     salida = [{f'Puesto {i+1}': str(row[0])} for i, row in enumerate(top3.values)]
 
-    print(salida)
-    # anio_maximo = genero_estadisticas.query(f"genres_x == '{genero}'")['playtime_forever'].sort_values(ascending=False)
-    # anio: str = pd.DataFrame(anio_maximo).reset_index().release_year.values[0]
     return salida
 
 
@@ -92,7 +90,7 @@ async def UsersWorstDeveloper( anio : int ):
     
     Parámetros:
         anio (int): _Año de Recomendación y/o Review_.        
-        Example: 2015
+        Ejempo: 2015
     '''
     dev_rec = pd.read_csv('datasets/developer_year_rec.csv')
     disponibles = dev_rec.year_posted.unique()
@@ -100,8 +98,6 @@ async def UsersWorstDeveloper( anio : int ):
         return {"Error": f"Año '{anio}' no encontrado"}
 
     query = dev_rec.query(f"year_posted == {anio}").head(3)
-
-    print(anio)
 
     salida = [{f'Puesto {i+1}': str(row[0])} for i, row in enumerate(query.values)]
     return salida

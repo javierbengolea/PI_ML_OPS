@@ -8,7 +8,7 @@
 
 ## Descripción del Proyecto
 
-Se nos da el acceso a 3 Datasets de la Empresa Steam (https://store.steampowered.com/?l=spanish) con información de Productos (Juegos de video), las reseñas de Usuarios y estadísticas de juego.
+Se nos da el acceso a 3 Datasets de la Empresa [Steam](https://store.steampowered.com/?l=spanish) con información de Productos (Juegos de video), las reseñas de Usuarios y estadísticas de juego.
 
 Realizamos un proceso de ETL (Extracción y Carga de Datos) para obtener la información y procesarla, para luego desarrollar un EDA (Análisis Exploratorio de Datos) con el fin de extraer la mayor información disponible.
 
@@ -41,7 +41,11 @@ Estas funcionalidades están implementadas y documentadas en [Link Render](https
 Para el Sistema de Recomendación, se utiliza un algoritmo que implica la `Similitud del Coseno`, métrica que trabaja sobre vectores y da una aproximación de la similitud entre ellos. Por lo tanto, si caracterizamos cada juego y lo comparamos con los demás podremos tener una medida muy acertada sobre su similaridad o no, lo que nos permite hacer muy buenas sugerencias.
 
 
+## Links
 
+**Producto**: [API MLOPs](https://pi-ml-ops-b4cf.onrender.com/docs#/).
+**API Framework**: https://fastapi.tiangolo.com/.
+**Deployment Service**: https://render.com/.
 
 
 

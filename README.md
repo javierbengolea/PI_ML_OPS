@@ -27,12 +27,12 @@ El proyecto está constituido por:
 
 El producto mínimo viable consiste en una API con 6 Endpoints:
 
-* GET /PlayTimeGenre/{genero}: Año que más horas se jugaron a un género.
-* GET /UserForGenre/{genero}: Usuario que jugó más tiempo a un género y detalle de horas anuales.
-* GET /UserRecommend/{anio}: Top 3 de juegos más recomendados para un año dado.
-* GET /UsersWorstDeveloper/{anio}: Top 3 de desarrolladoras menos recomendadas para un año dado.
-* GET /SentimentAnalysis/{developer}: Análisis de Sentimiento para una desarrolladora dada, se toman las reseñas y se categorizan y contabilizan en negativas, neutrales y positivas.
-* GET /recommend/{id_juego}: Dado un juego como parámetro se aplica un algoritmo que devuelve 5 juegos similares.
+* ```GET /PlayTimeGenre/{genero}```: Año que más horas se jugaron a un género.
+* ```GET /UserForGenre/{genero}```: Usuario que jugó más tiempo a un género y detalle de horas anuales.
+* ```GET /UserRecommend/{anio}```: Top 3 de juegos más recomendados para un año dado.
+* ```GET /UsersWorstDeveloper/{anio}```: Top 3 de desarrolladoras menos recomendadas para un año dado.
+* ```GET /SentimentAnalysis/{developer}```: Análisis de Sentimiento para una desarrolladora dada, se toman las reseñas y se categorizan y contabilizan en negativas, neutrales y positivas.
+* ```GET /recommend/{id_juego}```: Dado un juego como parámetro se aplica un algoritmo que devuelve 5 juegos similares.
 
 Estas funcionalidades están implementadas y documentadas en [Link Render](https://pi-ml-ops-b4cf.onrender.com/docs).
 

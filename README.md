@@ -44,7 +44,9 @@ Para el Sistema de Recomendación, se utiliza un algoritmo que implica la `Simil
 ## Links
 
 **Producto**: [API MLOPs](https://pi-ml-ops-b4cf.onrender.com/docs#/).
+
 **API Framework**: https://fastapi.tiangolo.com/.
+
 **Deployment Service**: https://render.com/.
 
 
